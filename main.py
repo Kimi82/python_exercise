@@ -39,7 +39,7 @@ def add_users(how):
             'name': 'Employe' + str(count),
             'org_id': get_organization()
         }
-        
+
         response = client.persons.create_person(data)
         count += 1
 
@@ -62,9 +62,11 @@ def add_activiy(how):
             'person_id' : users[count]
             }
         count+=1
-    users.pop(0)
-    response = client.activities.create_activity(data)
-    print(users)
+        #users.pop(0)
+        client = Client(domain=url)
+        client.set_api_token(apiToken)
+        response = client.activities.create_activity(data)
+        print(users)
 def get_user(howMany):
     url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
     client = Client(domain=url)
