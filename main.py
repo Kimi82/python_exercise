@@ -39,23 +39,32 @@ def add_users(how):
             'name': 'Employe' + str(count),
             'org_id': get_organization()
         }
-        count += 1
+        
         response = client.persons.create_person(data)
+        count += 1
 
 
 
-
-def add_activiy():
+def add_activiy(how):
     url = 'https://companydomain.pipedrive.com/v1/activities?api_token=' + apiToken
     client = Client(domain=url)
     client.set_api_token(apiToken)
+    count = 0
+    users = []
+    while count <= how:
+        users.append(get_user(count))
 
-    data = {
-        'subject':'Call to the president ',
-        'type':'Call'
-    }
+        data = {
+            'subject':'Call to the president',
+            'type':'Call',
+            'org_id' : get_organization(),
+            'done' : 0,
+            'person_id' : users[count]
+            }
+        count+=1
+    users.pop(0)
     response = client.activities.create_activity(data)
-
+    print(users)
 def get_user(howMany):
     url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
     client = Client(domain=url)
@@ -63,14 +72,16 @@ def get_user(howMany):
     count = 0
     personID = []
     while count < howMany:
-        helper = client.persons.get_all_persons()   
-        helper2 = helper['data'] 
+        helper = client.persons.get_all_persons()
+        helper2 = helper['data']
         personID=helper2[count]
         personID=personID['id']  # ID persons, all persons !!!!!!!!!!!!!
         count +=1
-        print(personID)
+    return personID
 
 #create_organization()
-#add_users(5)
-#add_activiy()
+add_users(5)
+add_activiy(5)
 get_user(5)
+
+
