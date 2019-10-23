@@ -54,6 +54,7 @@ def add_activiy(how):
     while count <= how:
         users.append(get_user(count))
 
+        print(users)
         data = {
             'subject':'Call to the president',
             'type':'Call',
@@ -61,12 +62,20 @@ def add_activiy(how):
             'done' : 0,
             'person_id' : users[count]
             }
+        data2 = {
+            'subject': 'Call to the minister',
+            'type': 'Meeting',
+            'org_id': get_organization(),
+            'done': 0,
+            'person_id': users[count]
+        }
         count+=1
-        #users.pop(0)
         client = Client(domain=url)
         client.set_api_token(apiToken)
         response = client.activities.create_activity(data)
-        print(users)
+        response = client.activities.create_activity(data2)
+
+
 def get_user(howMany):
     url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
     client = Client(domain=url)
@@ -79,11 +88,13 @@ def get_user(howMany):
         personID=helper2[count]
         personID=personID['id']  # ID persons, all persons !!!!!!!!!!!!!
         count +=1
+
     return personID
 
 #create_organization()
-add_users(5)
+#add_users(5)
 add_activiy(5)
 get_user(5)
+#print(get_user(0))
 
 
