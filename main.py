@@ -2,17 +2,17 @@ from pipedrive.client import Client
 
 clientSecret = '39fcabe84a47bf2351b2fb4e77aa07a05aa0c51b'
 clientID = '418c0925f25a9b6e'
-apiToken = '65001d59010b6b7edfc9bf1fee0535b82b74b1d2'
+apiToken = '65001d59010b6b7edfc9bf1fee0535b82b74b1d2'    # data needs to autoryzation
 companyDomain = 'edward-sandbox-9deccb'
 
 
 def create_organization():
     url = 'https://companydomain.pipedrive.com/v1/organizations?api_token=' + apiToken
-    client = Client(domain=url)
+    client = Client(domain=url)   #autoryzation
     client.set_api_token(apiToken)
 
     data = {
-        "name": 'My Organization',
+        "name": 'My Organization',  #name of the organization
     }
     response = client.organizations.create_organization(data)
 
@@ -28,7 +28,7 @@ def get_organization():
     return orgID
 
 def add_users(how):
-    # url = 'https://' + companyDomain + '.pipedrive.com/v1/persons/' + '1906' + '?api_token=' + apiToken
+    # url = 'https://' + companyDomain + '.pipedrive.com/v1/persons/' + '?api_token=' + apiToken
     url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
 
     client = Client(domain=url)
@@ -36,14 +36,12 @@ def add_users(how):
     count = 0
     while count < how:
         data = {
-            'name': 'Employe' + str(count),
+            'name': 'Employe' + str(count),     # add person with organization
             'org_id': get_organization()
         }
 
         response = client.persons.create_person(data)
         count += 1
-
-
 
 def add_activiy(how):
     url = 'https://companydomain.pipedrive.com/v1/activities?api_token=' + apiToken
@@ -58,15 +56,15 @@ def add_activiy(how):
         data = {
             'subject':'Call to the president',
             'type':'Call',
-            'org_id' : get_organization(),
-            'done' : 0,
+            'org_id' : get_organization(),  #add Call activity
+            'done' : 1, # 0 means than activity is done.
             'person_id' : users[count]
             }
         data2 = {
             'subject': 'Call to the minister',
-            'type': 'Meeting',
+            'type': 'Meeting',      #add meeting activity
             'org_id': get_organization(),
-            'done': 0,
+            'done': 1,
             'person_id': users[count]
         }
         count+=1
@@ -74,7 +72,6 @@ def add_activiy(how):
         client.set_api_token(apiToken)
         response = client.activities.create_activity(data)
         response = client.activities.create_activity(data2)
-
 
 def get_user(howMany):
     url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
@@ -92,9 +89,9 @@ def get_user(howMany):
     return personID
 
 create_organization()
-add_users(5)
-add_activiy(5)
-get_user(5)
-#print(get_user(0))
+add_users(5)   # 5 means add 5 users
+add_activiy(5) # 5 means add 5 activity (5 call and 5 meet)
+get_user(5)    # 5 means get 5 users
+
 
 
