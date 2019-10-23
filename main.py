@@ -51,8 +51,8 @@ def add_activiy(how):
     client.set_api_token(apiToken)
     count = 0
     users = []
-    while count <= how:
-        users.append(get_user(count))
+    while count < how:
+        users.append(get_user(count+1))
 
         print(users)
         data = {
@@ -91,8 +91,8 @@ def get_user(howMany):
 
     return personID
 
-#create_organization()
-#add_users(5)
+create_organization()
+add_users(5)
 add_activiy(5)
 get_user(5)
 #print(get_user(0))
