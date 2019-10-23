@@ -17,18 +17,24 @@ def create_organization():
     response = client.organizations.create_organization(data)
 
 def add_users(how):
-    
+    count2 = 0
+    while count2 < how:
+        url = 'https://' + companyDomain + '.pipedrive.com/v1/persons/' + str(count2) + '?api_token=' + apiToken
+        count2+=1
+    client = Client(domain=url)
+    response = client.set_api_token(apiToken)
 
     count = 0
     while count < how:
         data = {
-         'name': 'Employee'+ str(count)
+         'name': 'Employee'+ str(count),
          'org_id' : count
         }
         personID = count
-        
         client.persons.create_person(data)
         count+=1
+
+
 
 create_organization()
 add_users(2)
