@@ -28,8 +28,7 @@ def get_organization():
     return orgID
 
 def add_users(how):
-
-    #url = 'https://' + companyDomain + '.pipedrive.com/v1/persons/' + '1906' + '?api_token=' + apiToken
+    # url = 'https://' + companyDomain + '.pipedrive.com/v1/persons/' + '1906' + '?api_token=' + apiToken
     url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
 
     client = Client(domain=url)
@@ -39,11 +38,40 @@ def add_users(how):
         data = {
             'name': 'Employe' + str(count),
             'org_id': get_organization()
-      }
-        count +=1
+        }
+        count += 1
         response = client.persons.create_person(data)
 
 
 
-create_organization()
-add_users(5)
+
+def add_activiy():
+    url = 'https://companydomain.pipedrive.com/v1/activities?api_token=' + apiToken
+    client = Client(domain=url)
+    client.set_api_token(apiToken)
+
+    data = {
+        'subject':'Call to the president ',
+        'type':'Call'
+    }
+    response = client.activities.create_activity(data)
+
+def get_user(how):
+    url = 'https://api.pipedrive.com/v1/persons?start=0&api_token=' + apiToken
+    client = Client(domain=url)
+    response = client.set_api_token(apiToken)
+    count = 0
+    personID = []
+    helper2 = []
+    while count < how:
+        helper = client.persons.get_all_persons()
+        helper2.appe(helper['data'])
+        personID = helper2[count]
+        personID[1] = (personID['id'])  # ID of company!!!!!!!!!!!!!
+        count +=1
+        print(helper2)
+
+#create_organization()
+#add_users(1)
+#add_activiy()
+get_user(2)
