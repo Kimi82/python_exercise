@@ -10,7 +10,7 @@ def create_organization():
     url = 'https://companydomain.pipedrive.com/v1/organizations?api_token=' + apiToken
     client = Client(domain=url)   #autoryzation
     client.set_api_token(apiToken)
-
+    
     data = {
         "name": 'My Organization',  #name of the organization
     }
@@ -34,10 +34,11 @@ def add_users(how):
     client = Client(domain=url)
     response = client.set_api_token(apiToken)
     count = 0
+    orgID = get_organization()
     while count < how:
         data = {
             'name': 'Employe' + str(count),     # add person with organization
-            'org_id': get_organization()
+            'org_id': orgID
         }
 
         response = client.persons.create_person(data)
@@ -87,11 +88,11 @@ def get_user(howMany):
         count +=1
 
     return personID
-
+howMany = 5
 create_organization()
-add_users(5)   # 5 means add 5 users
-add_activiy(5) # 5 means add 5 activity (5 call and 5 meet)
-get_user(5)    # 5 means get 5 users
+add_users(howMany)   # 5 means add 5 users
+add_activiy(howMany) # 5 means add 5 activity (5 call and 5 meet)
+get_user(howMany)    # 5 means get 5 users
 
 
 
