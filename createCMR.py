@@ -1,4 +1,4 @@
-import one
+import getData
 from pipedrive.client import Client
 
 clientSecret = '39fcabe84a47bf2351b2fb4e77aa07a05aa0c51b'
@@ -13,7 +13,7 @@ def create_organization():
     client.set_api_token(apiToken)
 
     data = {
-        "name": one.orgName,  # name of the organization
+        "name": getData.orgName,  # name of the organization
     }
     response = client.organizations.create_organization(data)
 
@@ -40,7 +40,7 @@ def add_users(how):
     orgID = get_organization()
     while count < how:
         data = {
-            'name': one.employees[count],  # add person with organization
+            'name': getData.employees[count],  # add person with organization
             'org_id': orgID
         }
 
@@ -95,7 +95,7 @@ def get_user(howMany):
     return personID
 
 
-howMany = len(one.employees)
+howMany = len(getData.employees)
 create_organization()
 add_users(howMany)
 add_activiy(howMany)
