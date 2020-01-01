@@ -6,4 +6,3 @@ employees = []
 
 for x in range(homManyEmployes):
     employees.append(input("Enter name of your employe: "))
-
