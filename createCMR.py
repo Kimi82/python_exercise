@@ -1,6 +1,6 @@
 import sys
-sys.path.append('Desktop\docker\getData')
-from getData import getData
+sys.path.append('Desktop\docker\get_data')
+from get_data import get_data as getData
 from pipedrive.client import Client
 
 
